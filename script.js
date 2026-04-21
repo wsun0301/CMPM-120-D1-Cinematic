@@ -147,7 +147,7 @@ class LoadingScreen extends Phaser.Scene {
         });
 
         this.time.addEvent({
-            delay: 8000,
+            delay: 5000,
             callback: () => {
                 this.cameras.main.fadeOut(2000, 0, 0, 0);
                 this.cameras.main.once('camerafadeoutcomplete', () => {
@@ -167,8 +167,127 @@ class MainMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'mainMenu' });
     }
+    preload() {
+        this.load.path = 'assets/';
+        this.load.image('mainMenuBackground', 'menu.png');
+    };
+    create() {
+        this.cameras.main.setBackgroundColor('#c7c7c7');
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
+        let menuBackground = this.add.image(960, 540, 'mainMenuBackground').setScale(1).setAlpha(0);
+        this.tweens.add({
+            targets: menuBackground,
+            alpha: 1,
+            duration: 2000,
+            ease: 'Power1',
+        });
+        let menuBar = this.add.rectangle(-250, 540, 500, 1080, 0x000000).setAlpha(0);
+        this.tweens.add({
+            targets: menuBar,
+            alpha: 0.7,
+            x:250,
+            y: 540,
+            duration: 2000,
+            ease: 'Power1',
+        });
+        let menuTitle = this.add.text(-250, 300, 'Bassline Burnout', {
+            font: '60px impact',
+            fill: '#ffffff'
+        }).setOrigin(0.5).setAlpha(0);
+
+        let menuOptions = this.add.text(-250, 600, 'Start Game\nSettings\nCredits\nExit', {
+            
+            font: '50px impact',
+            fill: '#ffffff'
+        }).setOrigin(0.5).setAlpha(0).setLineSpacing(30);
+
+        let startButton = this.add.rectangle(-250, 475, 500, 50, 0xffffff).setAlpha(0.3).setInteractive();
+
+        startButton.on('pointerover', () => {
+            startButton.setAlpha(0.6);
+        });
+        startButton.on('pointerout', () => {
+            startButton.setAlpha(0.3);
+        });
+        
+        let settingsButton = this.add.rectangle(-250, 560, 500, 50, 0xffffff).setAlpha(0.3).setInteractive();
+
+        settingsButton.on('pointerover', () => {
+            settingsButton.setAlpha(0.6);
+        });
+        settingsButton.on('pointerout', () => {
+            settingsButton.setAlpha(0.3);
+        });
+
+        let creditsButton = this.add.rectangle(-250, 645, 500, 50, 0xffffff).setAlpha(0.3).setInteractive();
+
+        creditsButton.on('pointerover', () => {
+            creditsButton.setAlpha(0.6);
+        });
+        creditsButton.on('pointerout', () => {
+            creditsButton.setAlpha(0.3);
+        });
+        creditsButton.on('pointerdown', () => {
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                     this.scene.start('creditsScene');
+                });
+        });
+
+        let exitButton = this.add.rectangle(-250, 730, 500, 50, 0xffffff).setAlpha(0.3).setInteractive();
+        exitButton.on('pointerover', () => {
+            exitButton.setAlpha(0.6);
+        });
+        exitButton.on('pointerout', () => {
+            exitButton.setAlpha(0.3);
+        });
+
+
+        this.tweens.add({
+            targets: menuTitle,
+            alpha: 1,
+            x: 250,
+            y: 300, 
+            duration: 1000,
+            delay: 2000,
+            ease: 'Power1',
+        });
+
+        this.tweens.add({
+            targets: menuOptions,
+            alpha: 1,
+            x: 200,
+            y: 600,
+            duration: 1000,
+            delay: 2500,
+            ease: 'Power1',
+        });
+
+        this.tweens.add({
+            targets: [startButton, settingsButton, creditsButton, exitButton],
+            x: 250,
+            duration: 1000,
+            delay: 2500,
+            ease: 'Power1',
+        });
+
+    };
+    update() {};
+};
+
+class CreditsScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'creditsScene' });
+    }
     preload() {};
-    create() {};
+    create() {
+        this.cameras.main.setBackgroundColor('#c7c7c7');
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
+        let creditsText = this.add.text(960, 540, 'Game Design: Weichen Sun\nProgramming: Weichen Sun\nArt: Weichen Sun\nWheel gif: https://giphy.com/explore/spinning-tire-stickers \nLoading gif: https://giphy.com/explore/%D8%AA%D9%81%D8%AD%D9%8A%D8%B7-stickers\nStart game image:https://www.latimes.com/california/story/2022-12-29/los-angeles-times-photojournalist-looks-back-at-a-street-takeover-in-compton\nMusic: https://bvker.com/?srsltid=AfmBOorJpVGjx1fXznsu1p74DxMP1155bEkyl-Olk2oe-9aE5Y1z1fXP', {
+            font: '20px impact',
+            fill: '#000000'
+        }).setOrigin(0.5).setLineSpacing(20);
+    };
     update() {};
 };
 
@@ -181,7 +300,7 @@ let config = {
         height: 1080, // Logical height
     },
     backgroundColor: '#000000',
-    scene: [BasslineBurnout_Intro, LoadingScreen, MainMenu]
+    scene: [BasslineBurnout_Intro, LoadingScreen, MainMenu, CreditsScene]
 };
 
 let game = new Phaser.Game(config);
