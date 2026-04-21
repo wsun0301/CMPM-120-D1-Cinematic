@@ -18,6 +18,7 @@ Credits Page
 
 
 This exceeds the minimum requirement of three scenes.
+
 2. Audio Assets (2+ required)
 There are two audio assets used in the project:
 
@@ -52,8 +53,10 @@ Menu page backdrop
 
 
 These shapes are used for both layout and interaction design.
+
 5. Logotype Text (1+ required)
 There is one logotype text displayed on the title page, serving as the main branding/title of the project.
+
 6. Multi-line Text Block (1+ required)
 The project includes two multi-line text blocks:
 
