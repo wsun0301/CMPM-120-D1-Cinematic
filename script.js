@@ -170,6 +170,8 @@ class MainMenu extends Phaser.Scene {
     preload() {
         this.load.path = 'assets/';
         this.load.image('mainMenuBackground', 'menu.png');
+        this.load.audio('buttonSound', 'button sound.wav');
+        this.load.audio('buttonDing', 'button ding.wav');
     };
     create() {
         this.cameras.main.setBackgroundColor('#c7c7c7');
@@ -205,6 +207,7 @@ class MainMenu extends Phaser.Scene {
 
         startButton.on('pointerover', () => {
             startButton.setAlpha(0.6);
+            this.sound.play('buttonSound', { volume: 0.5 });
         });
         startButton.on('pointerout', () => {
             startButton.setAlpha(0.3);
@@ -214,6 +217,7 @@ class MainMenu extends Phaser.Scene {
 
         settingsButton.on('pointerover', () => {
             settingsButton.setAlpha(0.6);
+            this.sound.play('buttonSound', { volume: 0.5 });
         });
         settingsButton.on('pointerout', () => {
             settingsButton.setAlpha(0.3);
@@ -223,11 +227,13 @@ class MainMenu extends Phaser.Scene {
 
         creditsButton.on('pointerover', () => {
             creditsButton.setAlpha(0.6);
+            this.sound.play('buttonSound', { volume: 0.5 });
         });
         creditsButton.on('pointerout', () => {
             creditsButton.setAlpha(0.3);
         });
         creditsButton.on('pointerdown', () => {
+            this.sound.play('buttonDing', { volume: 0.5 });
             this.cameras.main.fadeOut(2000, 0, 0, 0);
                 this.cameras.main.once('camerafadeoutcomplete', () => {
                      this.scene.start('creditsScene');
@@ -237,6 +243,7 @@ class MainMenu extends Phaser.Scene {
         let exitButton = this.add.rectangle(-250, 730, 500, 50, 0xffffff).setAlpha(0.3).setInteractive();
         exitButton.on('pointerover', () => {
             exitButton.setAlpha(0.6);
+            this.sound.play('buttonSound', { volume: 0.5 });
         });
         exitButton.on('pointerout', () => {
             exitButton.setAlpha(0.3);
